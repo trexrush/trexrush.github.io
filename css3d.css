@@ -32,5 +32,5 @@
     color: var(--text-color);
     opacity: .3;
     border: .15em solid var(--text-color);
-    border-radius: 15%;
+    border-radius: 6px;
 }

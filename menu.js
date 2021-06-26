@@ -22,8 +22,7 @@ let scene,
     camera,
     rendererWEBGL,
     rendererCSS3D,
-    controls,
-    holding;
+    controls;
 const cssScale = 50 // scaling factor for html/css elements
 
 
@@ -41,42 +40,42 @@ scene.add(cube);
 // wrap in function pls
 let labelF = document.createElement('div') // content same, name is labelS
 labelF.classList.add('html', 'label') // content same, name is labelS
-labelF.innerHTML = 'Front' // content varies, name is labelS
+labelF.innerHTML = 'PROJECTS' // content varies, name is labelS
 const f = new CSS3DObject( labelF ) // name is s, content uses variable of name labelS
 f.scale.set(-1,1,1) // content same, name is s
 sceneCSS.add(f); // content uses variable of name s
 
 let labelR = document.createElement('div')
 labelR.classList.add('html', 'label')
-labelR.innerHTML = 'Right'
+labelR.innerHTML = 'Github'
 const r = new CSS3DObject( labelR )
 r.scale.set(-1,1,1)
 sceneCSS.add(r);
 
 let labelU = document.createElement('div')
 labelU.classList.add('html', 'label')
-labelU.innerHTML = 'Upper'
+labelU.innerHTML = 'ABOUT ME'
 const u = new CSS3DObject( labelU )
 u.scale.set(-1,1,1)
 sceneCSS.add(u);
 
 let labelB = document.createElement('div')
 labelB.classList.add('html', 'label')
-labelB.innerHTML = 'Back'
+labelB.innerHTML = 'LinkedIn'
 const b = new CSS3DObject( labelB )
 b.scale.set(-1,1,1)
 sceneCSS.add(b);
 
 let labelL = document.createElement('div')
 labelL.classList.add('html', 'label')
-labelL.innerHTML = 'Left'
+labelL.innerHTML = 'Other Links'
 const l = new CSS3DObject( labelL )
 l.scale.set(-1,1,1)
 sceneCSS.add(l);
 
 let labelD = document.createElement('div')
 labelD.classList.add('html', 'label')
-labelD.innerHTML = 'Down'
+labelD.innerHTML = 'filler page'
 const d = new CSS3DObject( labelD )
 d.scale.set(-1,1,1)
 sceneCSS.add(d);
@@ -152,10 +151,10 @@ function render() {
 
 // FUNCTIONS //
 
-function resetView() {
-    camera.up = new THREE.Vector3(0,0,1);
-    camera.lookAt(new THREE.Vector3(0,0,0));
-}
+// function resetView() {
+//     camera.up = new THREE.Vector3(0,0,1);
+//     camera.lookAt(new THREE.Vector3(0,0,0));
+// }
 
 function affixlabeltext(labelObj, blockObj, side, offsetunits) { // THIS IMPLIES NO CONTROLS CUZ IT SCREWS IT UP
     // get midpoint of front face
