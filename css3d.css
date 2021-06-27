@@ -30,7 +30,15 @@
     --text-color: white;
     font-size: 13px;
     color: var(--text-color);
-    opacity: .3;
+    opacity: .4;
     border: .15em solid var(--text-color);
     border-radius: 6px;
+
+    /* link */
+    text-decoration: none;
+}
+
+.title {
+    opacity: .5;
+    font-size: 18px;
 }
