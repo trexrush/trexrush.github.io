@@ -73,7 +73,7 @@ function init() {
 
     labelR = document.createElement('a')
     labelR.classList.add('html', 'label')
-    labelR.innerHTML = 'Github'
+    labelR.innerHTML = 'GITHUB'
     labelR.href = 'https://github.com/trexrush'
     r = new CSS3DObject( labelR )
 
@@ -85,13 +85,13 @@ function init() {
 
     labelB = document.createElement('a')
     labelB.classList.add('html', 'label')
-    labelB.innerHTML = 'LinkedIn'
+    labelB.innerHTML = 'LINKEDIN'
     labelB.href = 'https://www.linkedin.com/in/edmazuera/'
     b = new CSS3DObject( labelB )
 
     labelL = document.createElement('a')
     labelL.classList.add('html', 'label')
-    labelL.innerHTML = 'Other Links'
+    labelL.innerHTML = 'soon (links)'
     l = new CSS3DObject( labelL )
 
     labelD = document.createElement('a')
@@ -253,7 +253,7 @@ function affixlabeltext(labelObj, blockObj, side, distFromObj) {
 function shadeLabels(labelObj, domElement) {
     let dist = camera.position.distanceTo(labelObj.position)
 
-    let far = 740
+    let far = 780
     let near = 350
     let targetOpacity = .6
 

@@ -1,10 +1,54 @@
-.container {
+/* pallete for the dark colors: */
+/* --grad1: #1a1a1a; */
+/* --grad2: #151515; */
+
+.flex {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .project {
-    border: .15em solid var(--text-color);
-    border-radius: 6px;
+    margin-top: 50px;
+    border-radius: 15px;
+    padding: 20px;
+    height: 300px;
+    width: 400px;
+}
+
+.back {
+    margin-top: 50px;
+    border-radius: 15px;
+    padding: 20px;
+    height: 50px;
+    width: 200px;
+
+    background: radial-gradient(rgba(255,255,255,1), rgba(150,150,150,1));
+}
+
+.projecttext {
+    font-size: 32px;
+    text-shadow: 0px 0px 8px #151515;
+    user-select: none;
+}
+
+.centered {
+    display: grid;
+    place-items: center;
+}
+
+.link:hover {
+    cursor: pointer;
+}
+
+#trucktruckmoose {
+    background-image:
+    radial-gradient(rgba(255,255,255,.4), rgba(0,0,0,.4)),
+    url(/images/trucktruckmoose.jpg);
+}
+#googlehomepage {
+    background-image:
+    radial-gradient(rgba(255,255,255,.4), rgba(0,0,0,.4)),
+    url(/images/google.jpg);
+
 }
