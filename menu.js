@@ -56,7 +56,7 @@ function init() {
     // OBJECTS //
 
     // webgl //
-    cubegeometry = new THREE.BoxGeometry(2, 2, 2) // CONTROL CUBE
+    cubegeometry = new THREE.BoxGeometry(2.5, 2.5, 2.5) // CONTROL CUBE
     basicmaterial = new THREE.MeshBasicMaterial( { color: 0xbfc908 } ) //4d4d4d grey //bfc908 yellow
     cube = new THREE.Mesh( cubegeometry, basicmaterial )
 
@@ -127,12 +127,13 @@ function animate() { // animate loop
 }
 
 function render() {
-    affixlabeltext(f, cube, 'f')
-    affixlabeltext(r, cube, 'r')
-    affixlabeltext(u, cube, 'u')
-    affixlabeltext(b, cube, 'b')
-    affixlabeltext(l, cube, 'l')
-    affixlabeltext(d, cube, 'd')
+    let distFromCube = 1.25
+    affixlabeltext(f, cube, 'f', distFromCube)
+    affixlabeltext(r, cube, 'r', distFromCube)
+    affixlabeltext(u, cube, 'u', distFromCube)
+    affixlabeltext(b, cube, 'b', distFromCube)
+    affixlabeltext(l, cube, 'l', distFromCube)
+    affixlabeltext(d, cube, 'd', distFromCube)
     
     nameobj.lookAt(camera.position)
     nameobj.quaternion.copy(camera.quaternion)
@@ -144,6 +145,9 @@ function render() {
     rotX = rotX * (1 - slowingFactor);
 
     labels.lookAt(camera.position)
+
+    let testtext = "X = " + (mouseX - mouseXinit).toFixed(3) + "\nY = " + (mouseY - mouseYinit).toFixed(3)
+    labelD.innerHTML = testtext
 
     rendererWEBGL.render( scene, camera )
     rendererCSS3D.render( sceneCSS, camera )
@@ -173,14 +177,11 @@ function mouseMove(e) {
 
     rotX = ( mouseX - mouseXinit ) * .025
     rotY = -( mouseY - mouseYinit ) * .025
-
-    let testtext = "X = " + (mouseX - mouseXinit).toFixed(3) + "\nY = " + (mouseY - mouseYinit).toFixed(3)
-    labelD.innerHTML = testtext
 }
 
 function mouseUp(e) {
-    mouseXinit = -2
-    mouseYinit = -2
+    // mouseXinit = -2
+    // mouseYinit = -2
     console.log("X = " + mouseXinit + "\nY = " + mouseYinit)
 
     document.removeEventListener('mousemove', mouseMove)
@@ -215,12 +216,12 @@ function rotateAroundWorldAxis( object, axis, radians ) {
     object.rotation.setFromRotationMatrix( object.matrix );
 }
 
-function affixlabeltext(labelObj, blockObj, side, offsetunits) { // THIS IMPLIES NO CONTROLS CUZ IT SCREWS IT UP
+function affixlabeltext(labelObj, blockObj, side, distFromObj) { // THIS IMPLIES NO CONTROLS CUZ IT SCREWS IT UP
     // get midpoint of front face
     let transformMatrix = blockObj.matrix
-    let z = blockObj.geometry.parameters.depth * 1.25
-    let y = blockObj.geometry.parameters.width * 1.25
-    let x = blockObj.geometry.parameters.height * 1.25
+    let z = blockObj.geometry.parameters.depth * distFromObj
+    let y = blockObj.geometry.parameters.width * distFromObj
+    let x = blockObj.geometry.parameters.height * distFromObj
     
     switch(side) {
         case 'f':
