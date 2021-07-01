@@ -5,6 +5,8 @@ body {
     font-family: sans-serif;
     font-style: #333333;
     background: #1a1a1a;
+    height: 100%;
+    color: white;
 }
 
 .bg {
@@ -15,4 +17,9 @@ body {
     background: repeating-linear-gradient(45deg, var(--grad1), var(--grad1) 15px, var(--grad2) 15px, var(--grad2) 30px, var(--grad1) 30px);
 }
 
-/* SEED */
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}

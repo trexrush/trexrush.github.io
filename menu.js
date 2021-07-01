@@ -25,8 +25,6 @@ let rotXinit = 0
 let rotYinit = 0
 let slowingFactor = .03
 
-const cssScale = 1 // scaling factor for html/css elements
-
 init()
 animate()
 
@@ -37,7 +35,6 @@ function init() {
 
     scene = new THREE.Scene()
     sceneCSS = new THREE.Scene()
-    sceneCSS.scale.set(1/cssScale, 1/cssScale, 1/cssScale)
     scene.fog = new THREE.Fog( new THREE.Color( 0x1a1a1a), 200, 800)
 
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 )
@@ -119,6 +116,7 @@ function init() {
     sceneCSS.add(labels)
 
     document.addEventListener('mousedown', mouseDown)
+    window.addEventListener( 'resize', resize)
 }
 
 function animate() { // animate loop
@@ -127,7 +125,7 @@ function animate() { // animate loop
 }
 
 function render() {
-    let distFromCube = 1.25
+    let distFromCube = 1.4
     affixlabeltext(f, cube, 'f', distFromCube)
     affixlabeltext(r, cube, 'r', distFromCube)
     affixlabeltext(u, cube, 'u', distFromCube)
@@ -146,8 +144,14 @@ function render() {
 
     labels.lookAt(camera.position)
 
-    let testtext = "X = " + (mouseX - mouseXinit).toFixed(3) + "\nY = " + (mouseY - mouseYinit).toFixed(3)
-    labelD.innerHTML = testtext
+    //let testtext = "X = " + (mouseX - mouseXinit).toFixed(3) + "\nY = " + (mouseY - mouseYinit).toFixed(3)
+    //labelD.innerHTML = testtext
+    shadeLabels(f, labelF)
+    shadeLabels(r, labelR)
+    shadeLabels(u, labelU)
+    shadeLabels(b, labelB)
+    shadeLabels(l, labelL)
+    shadeLabels(d, labelD)
 
     rendererWEBGL.render( scene, camera )
     rendererCSS3D.render( sceneCSS, camera )
@@ -175,13 +179,11 @@ function mouseMove(e) {
     mouseX = ( e.clientX / window.innerWidth ) * 2 - 1
     mouseY = - ( e.clientY / window.innerHeight ) * 2 + 1
 
-    rotX = ( mouseX - mouseXinit ) * .025
-    rotY = -( mouseY - mouseYinit ) * .025
+    rotX = ( mouseX - mouseXinit ) * .03
+    rotY = -( mouseY - mouseYinit ) * .03
 }
 
 function mouseUp(e) {
-    // mouseXinit = -2
-    // mouseYinit = -2
     console.log("X = " + mouseXinit + "\nY = " + mouseYinit)
 
     document.removeEventListener('mousemove', mouseMove)
@@ -197,12 +199,12 @@ function mouseOut(e) {
     document.removeEventListener('mouseOut', mouseOut)
 }
 
-window.addEventListener( 'resize', function(e) {
+function resize(e) {
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
     rendererWEBGL.setSize(window.innerWidth, window.innerHeight)
     rendererCSS3D.setSize(window.innerWidth, window.innerHeight)
-})
+}
 
 // FUNCTIONS //
 
@@ -216,7 +218,7 @@ function rotateAroundWorldAxis( object, axis, radians ) {
     object.rotation.setFromRotationMatrix( object.matrix );
 }
 
-function affixlabeltext(labelObj, blockObj, side, distFromObj) { // THIS IMPLIES NO CONTROLS CUZ IT SCREWS IT UP
+function affixlabeltext(labelObj, blockObj, side, distFromObj) {
     // get midpoint of front face
     let transformMatrix = blockObj.matrix
     let z = blockObj.geometry.parameters.depth * distFromObj
@@ -225,22 +227,22 @@ function affixlabeltext(labelObj, blockObj, side, distFromObj) { // THIS IMPLIES
     
     switch(side) {
         case 'f':
-            labelObj.position.set(0,0,(z) * cssScale)
+            labelObj.position.set(0,0,z)
             break
         case 'b':
-            labelObj.position.set(0,0,(z) * -cssScale)
+            labelObj.position.set(0,0,-z)
             break
         case 'u':
-            labelObj.position.set(0,(y) * cssScale,0)
+            labelObj.position.set(0,y,0)
             break
         case 'd':
-            labelObj.position.set(0,(y) * -cssScale,0)
+            labelObj.position.set(0,-y,0)
             break
         case 'l':
-            labelObj.position.set((x) * -cssScale,0,0)
+            labelObj.position.set(-x,0,0)
             break
         case 'r':
-            labelObj.position.set((x) * cssScale,0,0)
+            labelObj.position.set(x,0,0)
             break
     }
 
@@ -248,14 +250,20 @@ function affixlabeltext(labelObj, blockObj, side, distFromObj) { // THIS IMPLIES
     labelObj.quaternion.copy(camera.quaternion)
 }
 
-// function followMouse () {
-//     target.x += ( mouseX - target.x ) * .004 // FOLLOW MOUSE
-//     target.y += ( mouseY - target.y ) * .004
-//     //target.z = camera.position.z / 10 // assuming the camera is located at ( 0, 0, z )
-//     camera.lookAt(target)
-// }
+function shadeLabels(labelObj, domElement) {
+    let dist = camera.position.distanceTo(labelObj.position)
 
-// function resetView() {
-//     camera.up = new THREE.Vector3(0,0,1)
-//     camera.lookAt(new THREE.Vector3(0,0,0))
-// }
+    let far = 740
+    let near = 350
+    let targetOpacity = .6
+
+    if (dist < near) {
+        domElement.style.opacity = targetOpacity
+    }
+    else if (dist > far) {
+        domElement.style.opacity = 0
+    }
+    else {
+        domElement.style.opacity = targetOpacity - (((dist - near) / (far - near)) * targetOpacity)
+    }
+}

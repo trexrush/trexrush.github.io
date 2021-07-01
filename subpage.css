@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.project {
+    border: .15em solid var(--text-color);
+    border-radius: 6px;
+}
