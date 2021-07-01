@@ -25,7 +25,7 @@ let rotXinit = 0
 let rotYinit = 0
 let slowingFactor = .03
 
-const cssScale = 50 // scaling factor for html/css elements
+const cssScale = 1 // scaling factor for html/css elements
 
 init()
 animate()
@@ -38,10 +38,10 @@ function init() {
     scene = new THREE.Scene()
     sceneCSS = new THREE.Scene()
     sceneCSS.scale.set(1/cssScale, 1/cssScale, 1/cssScale)
-    scene.fog = new THREE.Fog( new THREE.Color( 0x1a1a1a), 0, 10)
+    scene.fog = new THREE.Fog( new THREE.Color( 0x1a1a1a), 200, 800)
 
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 )
-    camera.position.z = 6
+    camera.position.z = 600
 
     rendererWEBGL = new THREE.WebGLRenderer( { alpha: true } )
     rendererWEBGL.setSize( window.innerWidth, window.innerHeight )
@@ -56,7 +56,7 @@ function init() {
     // OBJECTS //
 
     // webgl //
-    cubegeometry = new THREE.BoxGeometry(2.5, 2.5, 2.5) // CONTROL CUBE
+    cubegeometry = new THREE.BoxGeometry(220, 220, 220) // CONTROL CUBE
     basicmaterial = new THREE.MeshBasicMaterial( { color: 0xbfc908 } ) //4d4d4d grey //bfc908 yellow
     cube = new THREE.Mesh( cubegeometry, basicmaterial )
 

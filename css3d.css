@@ -17,7 +17,7 @@
 }
 .html { /* all html 3d elements inheret this */
     color: #1a1a1a;
-    font-size: 12px;
+    font-size: 30px;
     padding: 0px;
     background: none;
 }
@@ -28,7 +28,6 @@
 
 .label {
     --text-color: white;
-    font-size: 13px;
     color: var(--text-color);
     opacity: .4;
     border: .15em solid var(--text-color);
@@ -45,7 +44,7 @@
 
 .title {
     opacity: .5;
-    font-size: 18px;
+    font-size: 36px;
 
     -moz-user-select: none;
     -webkit-user-select: none;
