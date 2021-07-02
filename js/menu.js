@@ -17,8 +17,8 @@ let cube, cubegeometry, basicmaterial
 let labelF, labelR, labelU, labelB, labelL, labelD, name, labels
 let f, r, u, b, l, d, nameobj
 
-let mouseX, mouseY
-let mouseXinit, mouseYinit
+let pointerX, pointerY
+let pointerXinit, pointerYinit
 let rotX = 0
 let rotY = 0
 let rotXinit = 0
@@ -35,7 +35,7 @@ function init() {
 
     scene = new THREE.Scene()
     sceneCSS = new THREE.Scene()
-    scene.fog = new THREE.Fog( new THREE.Color( 0x1a1a1a), 200, 800)
+    scene.fog = new THREE.Fog( new THREE.Color( 0x1a1a1a), 0, 1000)
 
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 )
     camera.position.z = 600
@@ -115,8 +115,9 @@ function init() {
     labels.add( d )
     sceneCSS.add(labels)
 
-    document.addEventListener('mousedown', mouseDown)
+    document.addEventListener('pointerdown', pointerDown)
     window.addEventListener( 'resize', resize)
+    setSceneScale()
 }
 
 function animate() { // animate loop
@@ -144,7 +145,7 @@ function render() {
 
     labels.lookAt(camera.position)
 
-    //let testtext = "X = " + (mouseX - mouseXinit).toFixed(3) + "\nY = " + (mouseY - mouseYinit).toFixed(3)
+    //let testtext = "X = " + (pointerX - pointerXinit).toFixed(3) + "\nY = " + (pointerY - pointerYinit).toFixed(3)
     //labelD.innerHTML = testtext
     shadeLabels(f, labelF)
     shadeLabels(r, labelR)
@@ -159,44 +160,44 @@ function render() {
 
 // EVENTS //
 
-function mouseDown(e) {
+function pointerDown(e) {
 
     e.preventDefault();
-    document.addEventListener('mousemove', mouseMove)
-    document.addEventListener('mouseup', mouseUp)
-    document.addEventListener('mouseOut', mouseOut)
+    document.addEventListener('pointermove', pointerMove)
+    document.addEventListener('pointerup', pointerUp)
+    document.addEventListener('pointerOut', pointerOut)
 
-    mouseXinit = ( e.clientX / window.innerWidth ) * 2 - 1
-    mouseYinit = - ( e.clientY / window.innerHeight ) * 2 + 1
+    pointerXinit = ( e.clientX / window.innerWidth ) * 2 - 1
+    pointerYinit = - ( e.clientY / window.innerHeight ) * 2 + 1
 
     rotXinit = rotX
     rotYinit = rotY
 
-    console.log("X = " + mouseXinit + "\nY = " + mouseYinit)    
+    console.log("X = " + pointerXinit + "\nY = " + pointerYinit)    
 }
 
-function mouseMove(e) {
-    mouseX = ( e.clientX / window.innerWidth ) * 2 - 1
-    mouseY = - ( e.clientY / window.innerHeight ) * 2 + 1
+function pointerMove(e) {
+    pointerX = ( e.clientX / window.innerWidth ) * 2 - 1
+    pointerY = - ( e.clientY / window.innerHeight ) * 2 + 1
 
-    rotX = ( mouseX - mouseXinit ) * .03
-    rotY = -( mouseY - mouseYinit ) * .03
+    rotX = ( pointerX - pointerXinit ) * .03
+    rotY = -( pointerY - pointerYinit ) * .03
 }
 
-function mouseUp(e) {
-    console.log("X = " + mouseXinit + "\nY = " + mouseYinit)
+function pointerUp(e) {
+    console.log("X = " + pointerXinit + "\nY = " + pointerYinit)
 
-    document.removeEventListener('mousemove', mouseMove)
-    document.removeEventListener('mouseup', mouseUp)
-    document.removeEventListener('mouseOut', mouseOut)
+    document.removeEventListener('pointermove', pointerMove)
+    document.removeEventListener('pointerup', pointerUp)
+    document.removeEventListener('pointerOut', pointerOut)
 }
 
-function mouseOut(e) {
+function pointerOut(e) {
     console.log("left")
 
-    document.removeEventListener('mousemove', mouseMove)
-    document.removeEventListener('mouseup', mouseUp)
-    document.removeEventListener('mouseOut', mouseOut)
+    document.removeEventListener('pointermove', pointerMove)
+    document.removeEventListener('pointerup', pointerUp)
+    document.removeEventListener('pointerOut', pointerOut)
 }
 
 function resize(e) {
@@ -204,6 +205,8 @@ function resize(e) {
     camera.updateProjectionMatrix()
     rendererWEBGL.setSize(window.innerWidth, window.innerHeight)
     rendererCSS3D.setSize(window.innerWidth, window.innerHeight)
+
+    setSceneScale()
 }
 
 // FUNCTIONS //
@@ -266,4 +269,15 @@ function shadeLabels(labelObj, domElement) {
     else {
         domElement.style.opacity = targetOpacity - (((dist - near) / (far - near)) * targetOpacity)
     }
+}
+
+function setSceneScale() {
+    if (window.innerWidth/window.innerHeight < 1) { // if screen taller than wide
+        console.log('gotta resize')
+        let scalefactor = Math.abs(window.innerWidth/window.innerHeight)
+        console.log(scalefactor)
+        sceneCSS.scale.set(scalefactor,scalefactor,scalefactor)
+        scene.scale.set(scalefactor,scalefactor,scalefactor)
+    }
+    //1400px max
 }

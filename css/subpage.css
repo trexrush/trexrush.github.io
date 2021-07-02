@@ -2,6 +2,10 @@
 /* --grad1: #1a1a1a; */
 /* --grad2: #151515; */
 
+.container {
+    overflow-y: auto;
+}
+
 .flex {
     display: flex;
     flex-direction: column;
@@ -14,6 +18,8 @@
     padding: 20px;
     height: 300px;
     width: 400px;
+    max-width: 60%;
+    max-height: 30%;
 }
 
 .back {
@@ -37,6 +43,7 @@
 .centered {
     display: grid;
     place-items: center;
+    text-align: center;
 }
 
 .link:hover {
