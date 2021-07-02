@@ -256,8 +256,8 @@ function affixlabeltext(labelObj, blockObj, side, distFromObj) {
 function shadeLabels(labelObj, domElement) {
     let dist = camera.position.distanceTo(labelObj.position)
 
-    let far = 780
-    let near = 350
+    let far = 800
+    let near = 300
     let targetOpacity = .6
 
     if (dist < near) {
@@ -265,9 +265,11 @@ function shadeLabels(labelObj, domElement) {
     }
     else if (dist > far) {
         domElement.style.opacity = 0
+        domElement.classList.add('hiddenlink')
     }
     else {
         domElement.style.opacity = targetOpacity - (((dist - near) / (far - near)) * targetOpacity)
+        domElement.classList.remove('hiddenlink')
     }
 }
 
