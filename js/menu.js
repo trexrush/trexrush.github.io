@@ -1,19 +1,11 @@
 import * as THREE from "https://threejs.org/build/three.module.js"
-
 import { CSS3DRenderer, CSS3DObject } from 'https://threejs.org/examples/jsm/renderers/CSS3DRenderer.js'
-
-//import { OBJLoader } from 'https://threejs.org/examples/jsm/loaders/OBJLoader.js'
-//import { EffectComposer } from 'https://threejs.org/examples/jsm/postprocessing/EffectComposer.js'
-//import { RenderPass } from 'https://threejs.org/examples/jsm/postprocessing/RenderPass.js'
-//import { ShaderPass } from 'https://threejs.org/examples/jsm/postprocessing/ShaderPass.js'
-//import { OutlinePass } from 'https://threejs.org/examples/jsm/postprocessing/OutlinePass.js'
-//import { FXAAShader } from 'https://threejs.org/examples/jsm/shaders/FXAAShader.js'
 
 // for page transitions use window.history
 
 let scene, sceneCSS, camera, rendererWEBGL, rendererCSS3D
 
-let cube, cubegeometry, basicmaterial
+let cube
 let labelF, labelR, labelU, labelB, labelL, labelD, name, labels
 let f, r, u, b, l, d, nameobj
 
@@ -23,7 +15,10 @@ let rotX = 0
 let rotY = 0
 let rotXinit = 0
 let rotYinit = 0
-let slowingFactor = .03
+let slowingFactor = .03 //.03
+
+let distFromCube = 1.4
+let scuffedTimer = 0
 
 init()
 animate()
@@ -31,7 +26,7 @@ animate()
 // INIT and ANIMATION LOOP //
 
 function init() {
-    // core THREE.js //
+    // CORE //
 
     scene = new THREE.Scene()
     sceneCSS = new THREE.Scene()
@@ -42,6 +37,7 @@ function init() {
 
     rendererWEBGL = new THREE.WebGLRenderer( { alpha: true } )
     rendererWEBGL.setSize( window.innerWidth, window.innerHeight )
+    rendererWEBGL.antialias = true
     document.getElementById('webgl').appendChild( rendererWEBGL.domElement )
 
     rendererCSS3D = new CSS3DRenderer()
@@ -53,23 +49,21 @@ function init() {
     // OBJECTS //
 
     // webgl //
-    cubegeometry = new THREE.BoxGeometry(220, 220, 220) // CONTROL CUBE
-    basicmaterial = new THREE.MeshBasicMaterial( { color: 0xbfc908 } ) //4d4d4d grey //bfc908 yellow
-    cube = new THREE.Mesh( cubegeometry, basicmaterial )
-
-    cube.rotation.y = Math.PI/4
-    cube.rotation.x = Math.PI/4.5
-    scene.add(cube)
+    cube = new THREE.Mesh(
+            new THREE.BoxGeometry(220, 220, 220),
+            new THREE.MeshBasicMaterial({color: 0xbfc908}) //4d4d4d grey //bfc908 yellow
+            //new THREE.MeshNormalMaterial()
+            )
+    scene.add(cube) 
 
     // css3d //
 
-    // wrap all of these in a createLabel class or smth or use react
-    labelF = document.createElement('a') // content same, name is labelS
-    labelF.classList.add('html', 'label') // content same, name is labelS
-    labelF.innerHTML = 'PROJECTS' // content varies, name is labelS
+    // labels
+    labelF = document.createElement('a')
+    labelF.classList.add('html', 'label')
+    labelF.innerHTML = 'PROJECTS'
     labelF.href = 'projects.html'
-    f = new CSS3DObject( labelF ) // name is s, content uses variable of name labelS
-    //sceneCSS.add(f) // content uses variable of name s
+    f = new CSS3DObject( labelF )
 
     labelR = document.createElement('a')
     labelR.classList.add('html', 'label')
@@ -126,7 +120,6 @@ function animate() { // animate loop
 }
 
 function render() {
-    let distFromCube = 1.4
     affixlabeltext(f, cube, 'f', distFromCube)
     affixlabeltext(r, cube, 'r', distFromCube)
     affixlabeltext(u, cube, 'u', distFromCube)
@@ -170,34 +163,49 @@ function pointerDown(e) {
     pointerXinit = ( e.clientX / window.innerWidth ) * 2 - 1
     pointerYinit = - ( e.clientY / window.innerHeight ) * 2 + 1
 
-    rotXinit = rotX
-    rotYinit = rotY
-
-    console.log("X = " + pointerXinit + "\nY = " + pointerYinit)    
+    //rotXinit = rotX
+    //rotYinit = rotY
+    //console.log("X = " + pointerXinit + "\nY = " + pointerYinit)    
 }
 
 function pointerMove(e) {
     pointerX = ( e.clientX / window.innerWidth ) * 2 - 1
     pointerY = - ( e.clientY / window.innerHeight ) * 2 + 1
 
-    rotX = ( pointerX - pointerXinit ) * .03
-    rotY = -( pointerY - pointerYinit ) * .03
+    console.log(scuffedTimer++)
+
+    rotX = ( pointerX - pointerXinit )// * .3 // take derivative of mouse movement, not position
+    rotY = -( pointerY - pointerYinit )// * .3
+
+
+    // GOOD NEWS I have identified why the rotation is so wack
+    // BAD NEWS Fixing it involves calculus and my brain is not mentally prepared for that
+    // so here is my scuffed patch for this
+    if (scuffedTimer == 6) {
+        pointerXinit = ( e.clientX / window.innerWidth ) * 2 - 1
+        pointerYinit = - ( e.clientY / window.innerHeight ) * 2 + 1
+        scuffedTimer = 0
+    }
+    labelD.innerHTML = rotX
 }
 
 function pointerUp(e) {
-    console.log("X = " + pointerXinit + "\nY = " + pointerYinit)
-
+    //console.log("X = " + pointerXinit + "\nY = " + pointerYinit)
     document.removeEventListener('pointermove', pointerMove)
     document.removeEventListener('pointerup', pointerUp)
     document.removeEventListener('pointerOut', pointerOut)
 }
 
 function pointerOut(e) {
-    console.log("left")
-
+    //console.log("left")
     document.removeEventListener('pointermove', pointerMove)
     document.removeEventListener('pointerup', pointerUp)
     document.removeEventListener('pointerOut', pointerOut)
+}
+
+function setInitialMousePos(e) {
+    pointerXinit = ( e.clientX / window.innerWidth ) * 2 - 1
+    pointerYinit = - ( e.clientY / window.innerHeight ) * 2 + 1
 }
 
 function resize(e) {
@@ -212,7 +220,6 @@ function resize(e) {
 // FUNCTIONS //
 
 function rotateAroundWorldAxis( object, axis, radians ) {
-
     var rotationMatrix = new THREE.Matrix4();
 
     rotationMatrix.makeRotationAxis( axis.normalize(), radians );
@@ -222,7 +229,6 @@ function rotateAroundWorldAxis( object, axis, radians ) {
 }
 
 function affixlabeltext(labelObj, blockObj, side, distFromObj) {
-    // get midpoint of front face
     let transformMatrix = blockObj.matrix
     let z = blockObj.geometry.parameters.depth * distFromObj
     let y = blockObj.geometry.parameters.width * distFromObj
@@ -275,9 +281,7 @@ function shadeLabels(labelObj, domElement) {
 
 function setSceneScale() {
     if (window.innerWidth/window.innerHeight < 1) { // if screen taller than wide
-        console.log('gotta resize')
         let scalefactor = Math.abs(window.innerWidth/window.innerHeight)
-        console.log(scalefactor)
         sceneCSS.scale.set(scalefactor,scalefactor,scalefactor)
         scene.scale.set(scalefactor,scalefactor,scalefactor)
     }
