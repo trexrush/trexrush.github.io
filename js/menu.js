@@ -13,12 +13,10 @@ let pointerX, pointerY
 let pointerXinit, pointerYinit
 let rotX = 0
 let rotY = 0
-let rotXinit = 0
-let rotYinit = 0
-let slowingFactor = .03 //.03
+let rotSpeed = 3
+let slowingFactor = .2 //.03
 
 let distFromCube = 1.4
-let scuffedTimer = 0
 
 init()
 animate()
@@ -49,16 +47,20 @@ function init() {
     // OBJECTS //
 
     // webgl //
+
     cube = new THREE.Mesh(
             new THREE.BoxGeometry(220, 220, 220),
             new THREE.MeshBasicMaterial({color: 0xbfc908}) //4d4d4d grey //bfc908 yellow
             //new THREE.MeshNormalMaterial()
             )
+    // cube inital rotation
+    rotateAroundWorldAxis(cube, new THREE.Vector3(0, 1, 0), -(Math.PI)/6)
+    rotateAroundWorldAxis(cube, new THREE.Vector3(1, 0, 0), (Math.PI)/6)
     scene.add(cube) 
 
-    // css3d //
+    // CSS3D //
 
-    // labels
+        // labels
     labelF = document.createElement('a')
     labelF.classList.add('html', 'label')
     labelF.innerHTML = 'PROJECTS'
@@ -133,13 +135,11 @@ function render() {
     rotateAroundWorldAxis(cube, new THREE.Vector3(0, 1, 0), rotX);
     rotateAroundWorldAxis(cube, new THREE.Vector3(1, 0, 0), rotY);
 
-    rotY = rotY * (1 - slowingFactor);
-    rotX = rotX * (1 - slowingFactor);
+    rotY *= (1 - slowingFactor);
+    rotX *= (1 - slowingFactor);
 
     labels.lookAt(camera.position)
 
-    //let testtext = "X = " + (pointerX - pointerXinit).toFixed(3) + "\nY = " + (pointerY - pointerYinit).toFixed(3)
-    //labelD.innerHTML = testtext
     shadeLabels(f, labelF)
     shadeLabels(r, labelR)
     shadeLabels(u, labelU)
@@ -154,58 +154,38 @@ function render() {
 // EVENTS //
 
 function pointerDown(e) {
-
     e.preventDefault();
     document.addEventListener('pointermove', pointerMove)
     document.addEventListener('pointerup', pointerUp)
     document.addEventListener('pointerOut', pointerOut)
 
     pointerXinit = ( e.clientX / window.innerWidth ) * 2 - 1
-    pointerYinit = - ( e.clientY / window.innerHeight ) * 2 + 1
-
-    //rotXinit = rotX
-    //rotYinit = rotY
-    //console.log("X = " + pointerXinit + "\nY = " + pointerYinit)    
+    pointerYinit = - ( e.clientY / window.innerHeight ) * 2 + 1  
 }
 
 function pointerMove(e) {
+    // future improvements - make initial pos reset on a timer again but lerp the rotation
     pointerX = ( e.clientX / window.innerWidth ) * 2 - 1
     pointerY = - ( e.clientY / window.innerHeight ) * 2 + 1
 
-    console.log(scuffedTimer++)
+    rotX = ( pointerX - pointerXinit ) * rotSpeed
+    rotY = -( pointerY - pointerYinit ) * rotSpeed
 
-    rotX = ( pointerX - pointerXinit )// * .3 // take derivative of mouse movement, not position
-    rotY = -( pointerY - pointerYinit )// * .3
-
-
-    // GOOD NEWS I have identified why the rotation is so wack
-    // BAD NEWS Fixing it involves calculus and my brain is not mentally prepared for that
-    // so here is my scuffed patch for this
-    if (scuffedTimer == 6) {
-        pointerXinit = ( e.clientX / window.innerWidth ) * 2 - 1
-        pointerYinit = - ( e.clientY / window.innerHeight ) * 2 + 1
-        scuffedTimer = 0
-    }
-    labelD.innerHTML = rotX
+    //reset initial pos (so pointerX - pointerXinit is the rate of change)
+    pointerXinit = ( e.clientX / window.innerWidth ) * 2 - 1
+    pointerYinit = - ( e.clientY / window.innerHeight ) * 2 + 1
 }
 
 function pointerUp(e) {
-    //console.log("X = " + pointerXinit + "\nY = " + pointerYinit)
     document.removeEventListener('pointermove', pointerMove)
     document.removeEventListener('pointerup', pointerUp)
     document.removeEventListener('pointerOut', pointerOut)
 }
 
 function pointerOut(e) {
-    //console.log("left")
     document.removeEventListener('pointermove', pointerMove)
     document.removeEventListener('pointerup', pointerUp)
     document.removeEventListener('pointerOut', pointerOut)
-}
-
-function setInitialMousePos(e) {
-    pointerXinit = ( e.clientX / window.innerWidth ) * 2 - 1
-    pointerYinit = - ( e.clientY / window.innerHeight ) * 2 + 1
 }
 
 function resize(e) {
@@ -285,5 +265,4 @@ function setSceneScale() {
         sceneCSS.scale.set(scalefactor,scalefactor,scalefactor)
         scene.scale.set(scalefactor,scalefactor,scalefactor)
     }
-    //1400px max
 }
