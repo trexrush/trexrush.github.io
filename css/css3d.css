@@ -22,8 +22,9 @@
 .label {
     --text-color: white;
     color: var(--text-color);
-    border: .15em solid var(--text-color);
-    border-radius: 6px;
+    border: .08em solid var(--text-color);
+    border-radius: 3px;
+    padding: 2px 6px 2px 6px;
 
     /* link */
     text-decoration: none;
@@ -35,8 +36,9 @@
 }
 
 .title {
-    opacity: .5;
-    font-size: 36px;
+    opacity: .7;
+    font-size: 40px;
+    color: white;
 
     -moz-user-select: none;
     -webkit-user-select: none;

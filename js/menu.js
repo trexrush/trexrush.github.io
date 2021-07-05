@@ -18,6 +18,9 @@ let slowingFactor = .2 //.03
 
 let distFromCube = 1.4
 
+let xAxis = new THREE.Vector3(1, 0, 0)
+let yAxis = new THREE.Vector3(0, 1, 0)
+
 init()
 animate()
 
@@ -49,13 +52,13 @@ function init() {
     // webgl //
 
     cube = new THREE.Mesh(
-            new THREE.BoxGeometry(220, 220, 220),
+            new THREE.BoxGeometry(200, 200, 200),
             new THREE.MeshBasicMaterial({color: 0xbfc908}) //4d4d4d grey //bfc908 yellow
             //new THREE.MeshNormalMaterial()
             )
     // cube inital rotation
-    rotateAroundWorldAxis(cube, new THREE.Vector3(0, 1, 0), -(Math.PI)/6)
-    rotateAroundWorldAxis(cube, new THREE.Vector3(1, 0, 0), (Math.PI)/6)
+    rotateAroundWorldAxis(cube, yAxis, -(Math.PI)/6)
+    rotateAroundWorldAxis(cube, xAxis, (Math.PI)/6)
     scene.add(cube) 
 
     // CSS3D //
@@ -87,20 +90,21 @@ function init() {
 
     labelL = document.createElement('a')
     labelL.classList.add('html', 'label')
-    labelL.innerHTML = 'soon (links)'
+    //labelL.innerHTML = 'soon (links)'
     l = new CSS3DObject( labelL )
 
     labelD = document.createElement('a')
     labelD.classList.add('html', 'label')
-    labelD.innerHTML = 'for debug rn'
+    //labelD.innerHTML = 'for debug rn'
     d = new CSS3DObject( labelD )
 
     name = document.createElement('div')
     name.classList.add('html', 'title')
-    name.innerHTML = "Eduardo<br>Mazuera"
+    name.innerHTML = "E D U A R D O &emsp; M A Z U E R A"
     nameobj = new CSS3DObject( name )
+    nameobj.position.y = 440 // adjust later
     sceneCSS.add(nameobj)
-
+    
     // GROUPS //
     labels = new THREE.Group()
     labels.add( f )
@@ -128,12 +132,9 @@ function render() {
     affixlabeltext(b, cube, 'b', distFromCube)
     affixlabeltext(l, cube, 'l', distFromCube)
     affixlabeltext(d, cube, 'd', distFromCube)
-    
-    nameobj.lookAt(camera.position)
-    nameobj.quaternion.copy(camera.quaternion)
 
-    rotateAroundWorldAxis(cube, new THREE.Vector3(0, 1, 0), rotX);
-    rotateAroundWorldAxis(cube, new THREE.Vector3(1, 0, 0), rotY);
+    rotateAroundWorldAxis(cube, yAxis, rotX);
+    rotateAroundWorldAxis(cube, xAxis, rotY);
 
     rotY *= (1 - slowingFactor);
     rotX *= (1 - slowingFactor);
@@ -200,7 +201,7 @@ function resize(e) {
 // FUNCTIONS //
 
 function rotateAroundWorldAxis( object, axis, radians ) {
-    var rotationMatrix = new THREE.Matrix4();
+    let rotationMatrix = new THREE.Matrix4();
 
     rotationMatrix.makeRotationAxis( axis.normalize(), radians );
     rotationMatrix.multiply( object.matrix );
