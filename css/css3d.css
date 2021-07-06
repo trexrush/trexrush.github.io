@@ -34,14 +34,3 @@
     -ms-user-select: none;
     user-select: none;
 }
-
-.title {
-    opacity: .7;
-    font-size: 40px;
-    color: white;
-
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}

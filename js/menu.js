@@ -6,15 +6,15 @@ import { CSS3DRenderer, CSS3DObject } from 'https://threejs.org/examples/jsm/ren
 let scene, sceneCSS, camera, rendererWEBGL, rendererCSS3D
 
 let cube
-let labelF, labelR, labelU, labelB, labelL, labelD, name, labels
-let f, r, u, b, l, d, nameobj
+let labelF, labelR, labelU, labelB, labelL, labelD, labels
+let f, r, u, b, l, d
 
 let pointerX, pointerY
 let pointerXinit, pointerYinit
 let rotX = 0
 let rotY = 0
-let rotSpeed = 3
-let slowingFactor = .2 //.03
+let rotSpeed = 5
+let slowingFactor = .05 //.03
 
 let distFromCube = 1.4
 
@@ -59,6 +59,7 @@ function init() {
     // cube inital rotation
     rotateAroundWorldAxis(cube, yAxis, -(Math.PI)/6)
     rotateAroundWorldAxis(cube, xAxis, (Math.PI)/6)
+    cube.position.y = -80
     scene.add(cube) 
 
     // CSS3D //
@@ -97,13 +98,6 @@ function init() {
     labelD.classList.add('html', 'label')
     //labelD.innerHTML = 'for debug rn'
     d = new CSS3DObject( labelD )
-
-    name = document.createElement('div')
-    name.classList.add('html', 'title')
-    name.innerHTML = "E D U A R D O &emsp; M A Z U E R A"
-    nameobj = new CSS3DObject( name )
-    nameobj.position.y = 440 // adjust later
-    sceneCSS.add(nameobj)
     
     // GROUPS //
     labels = new THREE.Group()
@@ -139,7 +133,7 @@ function render() {
     rotY *= (1 - slowingFactor);
     rotX *= (1 - slowingFactor);
 
-    labels.lookAt(camera.position)
+    //labels.lookAt(camera.position)
 
     shadeLabels(f, labelF)
     shadeLabels(r, labelR)
@@ -200,13 +194,13 @@ function resize(e) {
 
 // FUNCTIONS //
 
-function rotateAroundWorldAxis( object, axis, radians ) {
+function rotateAroundWorldAxis(object, axis, radians) {
     let rotationMatrix = new THREE.Matrix4();
 
-    rotationMatrix.makeRotationAxis( axis.normalize(), radians );
-    rotationMatrix.multiply( object.matrix );
+    rotationMatrix.makeRotationAxis(axis.normalize(), radians);
+    rotationMatrix.multiply(object.matrix);
     object.matrix = rotationMatrix;
-    object.rotation.setFromRotationMatrix( object.matrix );
+    object.rotation.setFromRotationMatrix(object.matrix);
 }
 
 function affixlabeltext(labelObj, blockObj, side, distFromObj) {
@@ -235,9 +229,7 @@ function affixlabeltext(labelObj, blockObj, side, distFromObj) {
             labelObj.position.set(x,0,0)
             break
     }
-
     labelObj.position.applyMatrix4(transformMatrix)
-    labelObj.quaternion.copy(camera.quaternion)
 }
 
 function shadeLabels(labelObj, domElement) {
