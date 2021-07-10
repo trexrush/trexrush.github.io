@@ -22,30 +22,37 @@
     cursor: pointer;
 }
 
-.project {
+.border {
     --text-color: white;
     color: var(--text-color);
-    border: .25em solid var(--text-color);
-    border-radius: 15px;
+    border: .15em solid var(--text-color);
+    border-radius: 8px;
 
-    position: relative;
-    margin-top: 50px;
-    padding: 20px;
-    height: 300px;
-    width: 400px;
-    max-width: 60%;
-    max-height: 30%;
     opacity: .6;
 }
 
-.back {
+.box {
     margin-top: 50px;
+    position: relative;
+    padding: 20px;
+}
+
+.project {
+    width: 400px;
+    max-width: 60%;
+
+    height: 300px;
+    max-height: 30%;
+    min-height: 4em;
+}
+
+.back {
     border-radius: 15px;
     padding: 20px;
     height: 50px;
     width: 200px;
 
-    background: radial-gradient(rgba(255,255,255,1), rgba(150,150,150,1));
+    background: radial-gradient(rgba(255,255,255,.3), rgba(150,150,150,.3));
 }
 
 .projecttext {
@@ -64,12 +71,14 @@
     radial-gradient(rgba(255,255,255,.3), rgba(0,0,0,.3)),
     url(/images/trucktruckmoose.jpg);
     opacity: var(--alpha);
+    background-size: cover !important;
 }
 #googlehomepage {
     background:
     radial-gradient(rgba(255,255,255,.4), rgba(0,0,0,.4)),
     url(/images/google.jpg);
     opacity: var(--alpha);
+    background-size: cover !important;
 }
 
 .bgimage {
@@ -78,5 +87,4 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover !important;
 }
