@@ -1,0 +1,24 @@
+.container {
+    padding-top: 50px;
+    height: auto;
+}
+
+.about {
+    grid-area: about;
+
+    font-size: 24px;
+    text-shadow: 0px 0px 8px #151515;
+    user-select: text;
+    text-decoration: none;
+}
+
+.imgdiv {
+    position: relative;
+    width: 325px;
+    height: 300px;
+    min-height: 300px;
+}
+
+#propic {
+    background: url(./../images/facepic1.jpg);
+}

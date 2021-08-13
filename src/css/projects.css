@@ -1,9 +1,6 @@
-/* pallete for the dark colors: */
-/* --grad1: #1a1a1a; */
-/* --grad2: #151515; */
-
 .container {
     overflow-y: auto;
+    margin: 0;
 }
 
 .flex {
@@ -18,11 +15,11 @@
     text-align: center;
 }
 
-.link:hover {
+.link {
     cursor: pointer;
 }
 
-.border {
+.prborder {
     --text-color: white;
     color: var(--text-color);
     border: .15em solid var(--text-color);
@@ -69,16 +66,19 @@
 #trucktruckmoose {
     background:
     radial-gradient(rgba(255,255,255,.3), rgba(0,0,0,.3)),
-    url(/images/trucktruckmoose.jpg);
+    url(./../images/trucktruckmoose.jpg);
     opacity: var(--alpha);
     background-size: cover !important;
+
+
 }
 #googlehomepage {
     background:
     radial-gradient(rgba(255,255,255,.4), rgba(0,0,0,.4)),
-    url(/images/google.jpg);
+    url(./../images/google.jpg);
     opacity: var(--alpha);
     background-size: cover !important;
+    
 }
 
 .bgimage {
