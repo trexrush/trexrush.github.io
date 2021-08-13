@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.916c2dee.chunk.css",
+    "main.js": "/static/js/main.1ad9ef7a.chunk.js",
+    "main.js.map": "/static/js/main.1ad9ef7a.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.c944bdcd.js",
+    "runtime-main.js.map": "/static/js/runtime-main.c944bdcd.js.map",
+    "static/js/2.9eb682b2.chunk.js": "/static/js/2.9eb682b2.chunk.js",
+    "static/js/2.9eb682b2.chunk.js.map": "/static/js/2.9eb682b2.chunk.js.map",
+    "static/js/3.8eac5d2b.chunk.js": "/static/js/3.8eac5d2b.chunk.js",
+    "static/js/3.8eac5d2b.chunk.js.map": "/static/js/3.8eac5d2b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.916c2dee.chunk.css.map": "/static/css/main.916c2dee.chunk.css.map",
+    "static/js/2.9eb682b2.chunk.js.LICENSE.txt": "/static/js/2.9eb682b2.chunk.js.LICENSE.txt",
+    "static/media/Resume.70c72c42.pdf": "/static/media/Resume.70c72c42.pdf",
+    "static/media/about.css": "/static/media/facepic1.e40a668b.jpg",
+    "static/media/projects.css": "/static/media/trucktruckmoose.fed9be6e.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c944bdcd.js",
+    "static/js/2.9eb682b2.chunk.js",
+    "static/css/main.916c2dee.chunk.css",
+    "static/js/main.1ad9ef7a.chunk.js"
+  ]
+}
