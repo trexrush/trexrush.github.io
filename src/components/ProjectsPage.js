@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'wouter';
-import '../css/projects.css';
+import React from 'react'
+import { Link } from 'wouter'
+import '../css/projects.css'
 
 const Projects = () => {
     return  <div className="container flex">
@@ -16,7 +16,7 @@ const Projects = () => {
 
 const ProjectTile = (props) => {
     const handleClick = () => {
-        window.location.assign(props.link);
+        window.location.assign(props.link)
     }
     return <div className="project box centered link projecttext prborder" onClick={handleClick}>
         {props.children}
@@ -24,4 +24,4 @@ const ProjectTile = (props) => {
     </div>
 }
 
-export default Projects;
+export default Projects

@@ -135,7 +135,7 @@ const MenuScene = () => {
                         <Label position={[0, -affixDist, 0]} link="/projects">PROJECTS</Label>
                     </Cube>
                     <Environment preset="warehouse"/>
-                    <TrackballControls rotateSpeed={15} noZoom dynamicDampingFactor={.1}/>
+                    <TrackballControls rotateSpeed={15} noZoom noPan dynamicDampingFactor={.1}/>
                 </Suspense>
 }
 
