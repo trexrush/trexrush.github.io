@@ -4,6 +4,9 @@ import '../css/projects.css'
 
 const Projects = () => {
     return  <div className="container flex">
+                <ProjectTile link='https://timespace.vercel.app/' cssid="timespace">
+                    TimeSpace
+                </ProjectTile>
                 <ProjectTile link='https://trexrush.github.io/truck-truck-moose/' cssid="trucktruckmoose">
                     Truck Truck Moose
                 </ProjectTile>

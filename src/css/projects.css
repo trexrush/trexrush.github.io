@@ -69,16 +69,22 @@
     url(./../images/trucktruckmoose.jpg);
     opacity: var(--alpha);
     background-size: cover !important;
-
-
 }
+
 #googlehomepage {
     background:
     radial-gradient(rgba(255,255,255,.4), rgba(0,0,0,.4)),
     url(./../images/google.jpg);
     opacity: var(--alpha);
-    background-size: cover !important;
-    
+    background-size: cover !important; 
+}
+
+#timespace {
+    background:
+    radial-gradient(rgba(255,255,255,.4), rgba(0,0,0,.4)),
+    url(./../images/timespace.jpg);
+    opacity: var(--alpha);
+    background-size: cover !important; 
 }
 
 .bgimage {

@@ -9,20 +9,20 @@ const About = () => {
                 <div className="imgdiv">
                     <img id="propic" className="centered bgimage" src={face} alt="Profile" />
                 </div>
-                <div className="white about box centered border alpha">
+                <div className="white about box centered alpha">
                     Hello! I am Eduardo Mauzera, <br/>
                     a Computer Science Junior studying at UT Dallas. <br/>
                     <br/>
                     My interests are web design and game programming, <br/>
-                    and currently my focus is on frontend development,  <br/>
-                    expecially using React. <br/>
+                    and currently my focus is on frontend and fullstack development,  <br/>
+                    expecially using React and Nextjs. <br/>
                     <br/>
-                    I also have experience in Java, C++, Python, <br/>
+                    I also am profficient using Python, <br/>
                     along with Unity and the Adobe Suite.<br/>
                     <br/>
                     I love to travel and visit interesting new places. <br/>
-                    In my free time I play video games and <br/>
-                    <a href="https://www.worldcubeassociation.org/persons/2013MAZU02">competitively speedsolve the Rubik's Cube.</a><br/>
+                    In my free time I <br/>
+                    <a href="https://www.worldcubeassociation.org/persons/2013MAZU02" style={{color: "white", textDecoration: "underline"}}>competitively speedsolve the Rubik's Cube.</a><br/>
                 </div>
                 <Link className="white back box centered link projecttext border alpha" to="/">Back</Link>
             </div>
